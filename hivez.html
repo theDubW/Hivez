@@ -12,11 +12,11 @@
 	var playerWidth = 70;
 	var playerHeight = 70;
 	
-	window.onload = function(){
+	window.onload = function(){ // this is where basically all the calling occurs
 	canvas = document.getElementById('gameCanvas');
 	canvasContext = canvas.getContext('2d');
 	setInterval(callAll, 10);
-	setInterval(foodSpawner, 10000);
+	foodSpawner(10);
 	canvas.addEventListener('mousemove', 
 	function(evt){
 		var mousePos = calculateMousePos(evt);
@@ -25,7 +25,7 @@
 		
 	});
 }
-	function callAll(){
+	function callAll(){ // calls everything (drawing and moving)
 	moveEverything();
 	drawEverything();
 	}
@@ -37,23 +37,23 @@
 		
 		
 	}
-	function drawEverything(){
+	function drawEverything(){ //draws everything
 	drawRect(0, 0, canvas.width, canvas.height, 'black');
 	drawRect(playerX, playerY, playerWidth, playerHeight, 'green');
 		
 	}
-	function drawRect(x, y, width, height, chooseColor){
+	function drawRect(x, y, width, height, chooseColor){ //draws rectangles
 		canvasContext.fillStyle = chooseColor;
 		canvasContext.fillRect(x, y, width, height);
 	}
-	function drawCircle(x, y, radius, chooseColor){
+	function drawCircle(x, y, radius, chooseColor){ //draws circles
 		canvasContext.fillStyle = chooseColor;
 		canvasContext.beginPath();
 		canvasContext.arc(x, y, radius, 0, Math.PI*2, true);
 		canvasContext.fill();
 	}
 	
-	function calculateMousePos(evt){
+	function calculateMousePos(evt){ //gets mouse position relative to the canvas
 		var rect = canvas.getBoundingClientRect();
 		var root = document.documentElement;
 		var mouseX = evt.clientX - rect.left - root.scrollLeft;
@@ -63,10 +63,10 @@
 			y:mouseY
 		};
 	}
-	function foodSpawner(limit){
+	function foodSpawner(limit){ //spawns food around the canvas
 	for(i = 0; i<limit; i++){
-	var randX = Math.floor(Math.random()*800);	
-	var randY = Math.floor(Math.random()*600);
+	var randX = Math.floor(Math.random()*canvas.width);	
+	var randY = Math.floor(Math.random()*canvas.height);
 	drawCircle(randX, randY, 5, 'white');
 	console.log("made a circle");
 	}
