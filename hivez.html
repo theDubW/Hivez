@@ -18,7 +18,7 @@
 	setInterval(callAll, 10);
 	foodSpawner(10);
 	canvas.addEventListener('mousemove', 
-	function(evt){
+	function(evt){ //whenever the mouse is moved it updates the players position relative to the mouse
 		var mousePos = calculateMousePos(evt);
 		playerX = mousePos.x-60;
 		playerY = mousePos.y+60;
