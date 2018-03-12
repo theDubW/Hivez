@@ -16,7 +16,6 @@
 	canvas = document.getElementById('gameCanvas');
 	canvasContext = canvas.getContext('2d');
 	setInterval(callAll, 10);
-	foodSpawner(10);
 	canvas.addEventListener('mousemove', 
 	function(evt){ //whenever the mouse is moved it updates the players position relative to the mouse
 		var mousePos = calculateMousePos(evt);
@@ -40,6 +39,7 @@
 	function drawEverything(){ //draws everything
 	drawRect(0, 0, canvas.width, canvas.height, 'black');
 	drawRect(playerX, playerY, playerWidth, playerHeight, 'green');
+	foodSpawner(10);
 		
 	}
 	function drawRect(x, y, width, height, chooseColor){ //draws rectangles
@@ -71,8 +71,6 @@
 	console.log("made a circle");
 	}
 	}
-
-
 </script>
 
 
