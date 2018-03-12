@@ -1,0 +1,80 @@
+<!Doctype html>
+<html>
+<canvas id = "gameCanvas" width = "800" height = "600">
+</canvas>
+<script language = "javascript">
+	var canvas;
+	var canvasContext;
+	var playerX = 380;
+	var playerY = 280;
+	var playerSpeedX = 6;
+	var playerSpeedY = 2;
+	var playerWidth = 70;
+	var playerHeight = 70;
+	
+	window.onload = function(){
+	canvas = document.getElementById('gameCanvas');
+	canvasContext = canvas.getContext('2d');
+	setInterval(callAll, 10);
+	setInterval(foodSpawner, 10000);
+	canvas.addEventListener('mousemove', 
+	function(evt){
+		var mousePos = calculateMousePos(evt);
+		playerX = mousePos.x-60;
+		playerY = mousePos.y+60;
+		
+	});
+}
+	function callAll(){
+	moveEverything();
+	drawEverything();
+	}
+	function aiMovement(){
+	
+	}
+	function moveEverything(){
+		
+		
+		
+	}
+	function drawEverything(){
+	drawRect(0, 0, canvas.width, canvas.height, 'black');
+	drawRect(playerX, playerY, playerWidth, playerHeight, 'green');
+		
+	}
+	function drawRect(x, y, width, height, chooseColor){
+		canvasContext.fillStyle = chooseColor;
+		canvasContext.fillRect(x, y, width, height);
+	}
+	function drawCircle(x, y, radius, chooseColor){
+		canvasContext.fillStyle = chooseColor;
+		canvasContext.beginPath();
+		canvasContext.arc(x, y, radius, 0, Math.PI*2, true);
+		canvasContext.fill();
+	}
+	
+	function calculateMousePos(evt){
+		var rect = canvas.getBoundingClientRect();
+		var root = document.documentElement;
+		var mouseX = evt.clientX - rect.left - root.scrollLeft;
+		var mouseY = evt.clientY - rect.top - root.scrollTop;
+		return{
+			x:mouseX,
+			y:mouseY
+		};
+	}
+	function foodSpawner(limit){
+	for(i = 0; i<limit; i++){
+	var randX = Math.floor(Math.random()*800);	
+	var randY = Math.floor(Math.random()*600);
+	drawCircle(randX, randY, 5, 'white');
+	console.log("made a circle");
+	}
+	}
+
+
+</script>
+
+
+
+</html>
