@@ -1,78 +1,11 @@
-<!Doctype html>
+<!DOCTYPE html>
 <html>
-<canvas id = "gameCanvas" width = "800" height = "600">
-</canvas>
-<script language = "javascript">
-	var canvas;
-	var canvasContext;
-	var playerX = 380;
-	var playerY = 280;
-	var playerSpeedX = 6;
-	var playerSpeedY = 2;
-	var playerWidth = 70;
-	var playerHeight = 70;
-	
-	window.onload = function(){ // this is where basically all the calling occurs
-	canvas = document.getElementById('gameCanvas');
-	canvasContext = canvas.getContext('2d');
-	setInterval(callAll, 10);
-	canvas.addEventListener('mousemove', 
-	function(evt){ //whenever the mouse is moved it updates the players position relative to the mouse
-		var mousePos = calculateMousePos(evt);
-		playerX = mousePos.x-60;
-		playerY = mousePos.y+60;
-		
-	});
-}
-	function callAll(){ // calls everything (drawing and moving)
-	moveEverything();
-	drawEverything();
-	}
-	function aiMovement(){
-	
-	}
-	function moveEverything(){
-		
-		
-		
-	}
-	function drawEverything(){ //draws everything
-	drawRect(0, 0, canvas.width, canvas.height, 'black');
-	drawRect(playerX, playerY, playerWidth, playerHeight, 'green');
-	foodSpawner(10);
-		
-	}
-	function drawRect(x, y, width, height, chooseColor){ //draws rectangles
-		canvasContext.fillStyle = chooseColor;
-		canvasContext.fillRect(x, y, width, height);
-	}
-	function drawCircle(x, y, radius, chooseColor){ //draws circles
-		canvasContext.fillStyle = chooseColor;
-		canvasContext.beginPath();
-		canvasContext.arc(x, y, radius, 0, Math.PI*2, true);
-		canvasContext.fill();
-	}
-	
-	function calculateMousePos(evt){ //gets mouse position relative to the canvas
-		var rect = canvas.getBoundingClientRect();
-		var root = document.documentElement;
-		var mouseX = evt.clientX - rect.left - root.scrollLeft;
-		var mouseY = evt.clientY - rect.top - root.scrollTop;
-		return{
-			x:mouseX,
-			y:mouseY
-		};
-	}
-	function foodSpawner(limit){ //spawns food around the canvas
-	for(i = 0; i<limit; i++){
-	var randX = Math.floor(Math.random()*canvas.width);	
-	var randY = Math.floor(Math.random()*canvas.height);
-	drawCircle(randX, randY, 5, 'white');
-	console.log("made a circle");
-	}
-	}
-</script>
+<head>
+	<script src = "GameRunner.js"></script>
+	<script src = "Game.js"></script>
+</head>
+<body>
+<canvas id = "mess" width = 800 height = 600></canvas>
 
-
-
+</body>
 </html>
