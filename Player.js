@@ -1,3 +1,4 @@
+//Dude Playa is lit
 class Player extends GameObject
 {
   this.defW = 10;
