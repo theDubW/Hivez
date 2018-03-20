@@ -21,9 +21,6 @@ class Player extends GameObject
     this.armor = typeof(armor)==undefined ? this.armor : armor;
     super(x,y,img, this.defW,this.defH);
   }
-checkBoundaries(){
-
-}
   incHealth(num)
   {
     this.health+=num;
