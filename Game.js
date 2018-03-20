@@ -10,9 +10,10 @@ public class Game
   	draw();
   }
   move(){
-  	player.checkBoundaries(); //This is an imaginary function that should be in the player class to check if its inside the boundaries
+  	player.checkBoundaries(); //This is an imaginary function that should be in
+    // the player class to check if its inside the boundaries
   }
   draw(){
-    
+
   }
 }
