@@ -54,7 +54,7 @@ var castleWidth = 100;
 var castleHeight = 118;
 function game(){ // this is the main function which is called 30 times a second in "MessingAround.html"
 move();//Move function moves every thing in the game
-draw();//draw function draws it onto the canvas 
+draw();//draw function draws it onto the canvas
 }
 function draw(){//draws everything
 drawRect(0, 0, canvas.width, canvas.height, "black");//this is the starting black background
@@ -84,9 +84,10 @@ playerX += playerXSpeed;
 playerY += playerYSpeed;
 }
 window.addEventListener('keydown', function(e){ // listens for keypresses, left, right, up, down, and e
-	
+
 	if(e.keyCode == 37){ //left
-		playerXSpeed = -4;
+		playerXSpeed = -4;\
+		
 		playerYSpeed = 0;
 	}
 	if(e.keyCode == 39){ //right
@@ -109,9 +110,9 @@ window.addEventListener('keydown', function(e){ // listens for keypresses, left,
 		dropCoins();
 		goldAmount=0;
 	}
-	
-	
-	
+
+
+
 
 });
 function drawRect(x, y, width, height, color){ //simple function that draws you a rectangle
@@ -170,8 +171,8 @@ function collectGold(img, goldArrs){ // checks if you're collecting gold
 					if(goldAmount>0){
 						droppable = true;
 					}
-			
-				}  
+
+				}
 			}
 		}
 	}
