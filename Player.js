@@ -1,3 +1,35 @@
+window.addEventListener('keydown', function(e){ // listens for keypresses, left, right, up, down, and e
+  var keyCode = e.keyCode;
+  switch(keyCode)
+  {
+    case 37:
+      
+  }
+	if(e.keyCode == 37){ //left
+		playerXSpeed = -4;
+		playerYSpeed = 0;
+	}
+	if(e.keyCode == 39){ //right
+		playerXSpeed = 4;
+		playerYSpeed = 0;
+	}
+	else if(e.keyCode == 38){ //up
+		playerYSpeed = -4;
+		playerXSpeed = 0;
+	}
+	else if(e.keyCode == 40){ //down
+		playerYSpeed = 4;
+		playerXSpeed = 0;
+	}
+	if(e.keyCode == 69){//when you press e you drop your coins by your base
+		dropCoins();
+		goldAmount=0;
+	}
+
+
+
+
+});
 class Player extends GameObject
 {
   this.defW = 10;

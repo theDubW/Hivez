@@ -6,17 +6,10 @@ public class Game
     this.room = room;
     this.player = player;
   }
-  run(){
-  	move();
-  	draw();
-  }
-  move(){
-
-  }
   draw(){
-
+    //TODO implement draw method so that it checks how everything has moved
   }
   getMap(player){
-
+    //TODO send the server the player's x and y to the server and returns the map
   }
 }
