@@ -1,3 +1,4 @@
+import io from 'socket.io-client';
 window.onload = function(){
-	setInterval(game, 1000/30);
+	var gameObject = new Game();
 }

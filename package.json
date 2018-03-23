@@ -1,8 +1,15 @@
 {
+<<<<<<< HEAD
   "name": "hivez-master",
   "version": "1.0.0",
   "description": "Hivez.io for Max and Evan",
   "main": "index.js",
+=======
+  "name": "Hivez",
+  "version": "0.0.0",
+  "description": "",
+  "main": "server.js",
+>>>>>>> 315176fd70f3865b00bd1a15aa0379d18e58a149
   "dependencies": {
     "express": "^4.16.3",
     "socket.io": "^2.0.4"
