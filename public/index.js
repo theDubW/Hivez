@@ -56,6 +56,12 @@ function drawAllPlayers(playerCoords){
 		}
 	}
 }
+var loc;
+socket.on('Code', arrayPlayerIndex);
+function arrayPlayerIndex(data){
+loc = data;
+
+}
 
 socket.on('PlayerXY', updateCords);
 function updateCords(cords){
