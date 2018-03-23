@@ -1,9 +1,11 @@
 public class Game
 {
-  constructor(team, room, playerName,x ,y){
+  constructor(team, room, playerName){
     this.map = getMap(player);
     this.team = team;
     this.room = room;
+    this.socket = io.connect('http://http://10.10.149.169:1000');
+    socket.on('GameCoords',visiblePlayer)
     this.player = new Player(x,y,playerName);
     window.addEventListener('keydown', function(e){ // listens for keypresses, left, right, up, down, and e
       var keyCode = e.keyCode;
@@ -14,39 +16,23 @@ public class Game
           break;
         case 39:
           movePlayer(4,0);
+          break;
         case 38:
           movePlayer(0,-4);
-      }
-    	if(e.keyCode == 37){ //left
-    		playerXSpeed = -4;
-    		playerYSpeed = 0;
-    	}
-    	if(e.keyCode == 39){ //right
-    		playerXSpeed = 4;
-    		playerYSpeed = 0;
-    	}
-    	else if(e.keyCode == 38){ //up
-    		playerYSpeed = -4;
-    		playerXSpeed = 0;
-    	}
-    	else if(e.keyCode == 40){ //down
-    		playerYSpeed = 4;
-    		playerXSpeed = 0;
-    	}
-    	if(e.keyCode == 69){//when you press e you drop your coins by your base
-    		dropCoins();
-    		goldAmount=0;
-    	}
-
-
-
-
-    });
+          break;
+        case 40:
+          movePlayer(0,4);
+          break;
+        case 69:
+          dropCoins();
+          break;
+    }
+    setInterval(run, 1000/30);
   }
-  draw(){
-    //TODO implement draw method so that it checks how everything has moved
+  run(){
+    socket.on('GameCoords',draw);
   }
-  getMap(player){
-    //TODO send the server the player's x and y to the server and returns the map
+  draw(data){
+    console.log(draw);
   }
 }
