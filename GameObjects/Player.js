@@ -1,35 +1,3 @@
-window.addEventListener('keydown', function(e){ // listens for keypresses, left, right, up, down, and e
-  var keyCode = e.keyCode;
-  switch(keyCode)
-  {
-    case 37:
-      
-  }
-	if(e.keyCode == 37){ //left
-		playerXSpeed = -4;
-		playerYSpeed = 0;
-	}
-	if(e.keyCode == 39){ //right
-		playerXSpeed = 4;
-		playerYSpeed = 0;
-	}
-	else if(e.keyCode == 38){ //up
-		playerYSpeed = -4;
-		playerXSpeed = 0;
-	}
-	else if(e.keyCode == 40){ //down
-		playerYSpeed = 4;
-		playerXSpeed = 0;
-	}
-	if(e.keyCode == 69){//when you press e you drop your coins by your base
-		dropCoins();
-		goldAmount=0;
-	}
-
-
-
-
-});
 class Player extends GameObject
 {
   this.defW = 10;
@@ -40,7 +8,7 @@ class Player extends GameObject
   this.weapons = new WeaponsPack();
   this.armor = new ArmorPack();
   this.coffer = 0;
-  constructor(x, y, img, gold, weapons, armor)
+  constructor(x, y, name, img, gold, weapons, armor)
   {
     /*
       Here I check to see if all of the parameters of the constructor
@@ -51,6 +19,7 @@ class Player extends GameObject
     this.gold = typeof(gold)==undefined ? this.gold : gold;
     this.weapons = typeof(weapons)==undefined ? this.weapons : weapons;
     this.armor = typeof(armor)==undefined ? this.armor : armor;
+    this.name=
     super(x,y,img, this.defW,this.defH);
   }
   incHealth(num)
