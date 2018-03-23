@@ -6,6 +6,8 @@ public class Game
     this.room = room;
     this.socket = io.connect('http://http://10.10.149.169:1000');
     socket.on('GameCoords',visiblePlayer)
+    socket.on('Code',playerCode);
+    this.playerCode= playerCode;
     this.player = new Player(x,y,playerName);
     window.addEventListener('keydown', function(e){
        // listens for keypresses, left, right, up, down, and e
