@@ -1,3 +1,7 @@
+import io from 'socket.io-client';
+var socket;
+socket = io.connect("http://localhost:3000"); 
+
 var canvas = document.getElementById("mess");
 var context = canvas.getContext('2d');
 
