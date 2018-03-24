@@ -1,10 +1,10 @@
 public class Game
 {
-  constructor(canvas, team, room, playerName){
+  constructor(team, room, playerName){
     this.map = getMap(player);
     this.team = team;
     this.room = room;
-    this.canvas = canvas;
+    this.canvas = document.getElementById("mess");
     this.context=canvas.getContext('2d');
     this.socket = io.connect('http://http://10.10.149.169:1000');
     socket.on('GameCoords',visiblePlayer)
@@ -47,23 +47,14 @@ public class Game
     ]
     players:
     {
-      self_: {
-        name:"MyName",
-        team:"Red",
-        orientation:360,
-        health:100,
-        gold:50
-      }
-      others:
-      [
         {
           name:"Jack Wier",
           team:"Blue",
           orientation:400,
           health:50,
           gold:20
+          position:[x,y] //The position of the center of the player
         }
-      ]
     }
     bases:
     [
@@ -76,13 +67,69 @@ public class Game
   }
   *************************************************************/
   draw(data){
-    var coins = data.coins;
+    drawCoins(data.coins);
+    drawPlayers(data.players);
+    drawBases(data.bases);
+  }
+  drawCoins(coins){
     for(var coin in coins)
     {
       var gold = new Image();
-      gold.src = 'https://i.pinimg.com/originals/f3/2f/7a/f32f7ac408007a11a311575f94438c19.jpg';
-      gold.width = 40;
-      gold.height = 40;
+      gold.src = './public/images/gold.jpg';
+      context.drawImage(gold, coin[0], coin[1]);
+    }
+  }
+  getColors(team)
+  {
+    /************
+    Returns the colors to draw each player/base based on their team.
+    The format is ["outsideColor","insideColor"]
+    ***********/
+    if(team=="Blue")
+    {
+      return ["#5e97f2","#93baf9"];
+    }
+    else if(team=="Red")
+    {
+      return ["#fc4646","#f75d5d"];
+    }
+    else if(team=="Green")
+    {
+      return ["#4fad24","#76db48"];
+    }
+    else
+    {
+        return ["#e5e835","#f9fc64"];
+    }
+  }
+  drawPlayers(players){
+    for(var player in players.others)
+    {
+      var colors = getColors(player.team);
+      context.beginPath();
+      context.arc(player.position[0],player.position[1],35,2*Math.PI);
+      context.stroke();
+      context.fillStyle=colors[0];
+      context.fill()
+      context.beginPath();
+      context.arc(player.position[0],player.position[1],35,2*Math.PI);
+      context.stroke();
+      context.fillStyle=colors[1];
+      context.fill();
+      context.font = "30px Arial";
+      context.fillText(player.name, player.position[0]-35, player.position[1]+40);
+    }
+  }
+  drawBases(bases)
+  {
+    for(base in bases)
+    {
+      var colors = getColors(base.team);
+      contex.fillStyle=colors[1];
+      for(tile in base.tiles)
+      {
+        contex.fillRect(tile[0],tile[1],30,30);
+      }
     }
   }
   dropCoins(){
