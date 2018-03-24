@@ -32,7 +32,7 @@ var playerXYSpeed = [0, 0];
 		dropCoins();
 		goldAmount=0;
 	}
-	
+
 });
 
 
@@ -100,7 +100,7 @@ var castleWidth = 100;
 var castleHeight = 118;
 function game(){ // this is the main function which is called 30 times a second in "MessingAround.html"
 move();//Move function moves every thing in the game
-draw();//draw function draws it onto the canvas 
+draw();//draw function draws it onto the canvas
 }
 function draw(){//draws everything
 drawRect(0, 0, canvas.width, canvas.height, "black");//this is the starting black background
@@ -165,13 +165,13 @@ for(var i = 0; i<wallArr.length; i++){
 }
 }
 function spawnGold(img, goldArr){ // spawns gold around the map based on an array
-for(var i = 0; i<goldArr.length; i++){
+	for(var i = 0; i<goldArr.length; i++){
 	for(var g = 0; g<goldArr[i].length; g++){
 		if(goldArr[i][g]!=0){
 		makePlayer(g*img.width, i*img.height, img.width, img.height, img);
 		}
+		}
 	}
-}
 }
 function collectGold(img, goldArrs){ // checks if you're collecting gold
 	for(var i = 0; i<goldArrs.length; i++){
@@ -185,8 +185,8 @@ function collectGold(img, goldArrs){ // checks if you're collecting gold
 					if(goldAmount>0){
 						droppable = true;
 					}
-			
-				}  
+
+				}
 			}
 		}
 	}

@@ -1,9 +1,11 @@
 public class Game
 {
-  constructor(team, room, playerName){
+  constructor(canvas, team, room, playerName){
     this.map = getMap(player);
     this.team = team;
     this.room = room;
+    this.canvas = canvas;
+    this.context=canvas.getContext('2d');
     this.socket = io.connect('http://http://10.10.149.169:1000');
     socket.on('GameCoords',visiblePlayer)
     socket.on('Code',playerCode);
@@ -39,10 +41,10 @@ public class Game
   The parameter data should be structured as follows:
   data = {
     coins:
-    {
+    [
       [x,y],
       [x,y], etc...
-    }
+    ]
     players:
     {
       self_: {
@@ -74,7 +76,14 @@ public class Game
   }
   *************************************************************/
   draw(data){
-    console.log(draw);
+    var coins = data.coins;
+    for(var coin in coins)
+    {
+      var gold = new Image();
+      gold.src = 'https://i.pinimg.com/originals/f3/2f/7a/f32f7ac408007a11a311575f94438c19.jpg';
+      gold.width = 40;
+      gold.height = 40;
+    }
   }
   dropCoins(){
     socket.emit('DropCoins',true);
