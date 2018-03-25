@@ -1,6 +1,7 @@
 class Gold extends GameObject
 {
+  this.defImg = "./public/images/gold.jpg";
   constructor(x, y, w, h){
-    super(x,y,"C:\Users\Alex\Desktop\Hivez\gold", w,h);
+    super(x,y,defImg, w,h);
   }
 }

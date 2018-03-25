@@ -2,7 +2,7 @@ class Player extends GameObject
 {
   this.defW = 10;
   this.defH = 10;
-  this.defImg = "GameImages\player.png";
+  this.defImg = "./public/images/player.png";
   this.health = 100;
   this.gold = 0;
   constructor(playerId, team, x, y, name, img, gold)
