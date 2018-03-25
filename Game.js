@@ -1,5 +1,10 @@
 public class Game
 {
+  this.emitList = {};
+  /*emitList will contain every message needing to be sent to the server and will
+  be sent in run() every frame. Its format is as follows:
+    emitList = {['identifier',data], ['identifier',data]}
+    */
   constructor(team, room, playerName){
     this.map = getMap(player);
     this.team = team;
@@ -11,6 +16,10 @@ public class Game
     socket.on('Code',playerCode);
     this.playerCode= playerCode;
     this.player = new Player(x,y,playerName);
+    addEventListeners();
+    setInterval(run, 1000/30);//30 times every second run() will be called
+  }
+  addEventListeners(){
     window.addEventListener('keydown', function(e){
        // listens for keypresses, left, right, up, down, and e
       var keyCode = e.keyCode;
@@ -32,10 +41,54 @@ public class Game
           dropCoins();
           break;
     }
-    setInterval(run, 1000/30);//30 times every second run() will be called
+    canvas.onmousemove = function(e){
+      const DEGRAD = 57.2974694;//The number of degrees per radian
+      var playerX = canvas.width/2;
+      var playerY = canvas.height/2;
+      var mouseX = e.clientX;
+      var mouseY = e.clientY;
+      var orientation = 0;
+      if(mouseX==playerX && mouseY>playerY);
+      {
+        orientation = 180;
+      }
+      else if(mouseX==playerX){}//This would set orientation to 0, but it already is
+      else if(mouseY==playerY && mouseX>playerX)
+      {
+        orientation = 90;
+      }
+      else if(mouseY==playerY)
+      {
+        orientation = 270;
+      }
+      else
+      {
+        if(mouseX>playerX && mouseY < playerY)//If its in the top right quadrant
+        {
+            orientation = Math.atan((mouseX-playerX)/(playerY-mouseY))*DEGRAD;
+        }
+        else if(mouseX>playerX)//If its in the bottom left quadrant
+        {
+          orientation = Math.atan((mouseY-playerY)/(mouseX-playerX))*DEGRAD + 90;
+        }
+        else if(mouseY>playerY)//If its in the bottom right quadrant
+        {
+          orientation = Math.atan((playerX-mouseX)/(mouseY-playerY))*DEGRAD + 180;
+        }
+        else //If its in the top left quardant
+        {
+          orientation = Math.atan((playerY-mouseY)/(playerX-mouseX))*DEGRAD + 270;
+        }
+      }
+      emitList.push(["orientation",orientation]);//Adds it to the emitList
+    }
+    canvas.onclick = function(e){
+      emitList.push(['playerClick',true]);
+    }
   }
   run(){//Called every frame, gets visual data from server
     socket.on('GameCoords',draw);
+    socket.emit("UserData",emitList);//Sends all of the data
   }
   /****************************************************8
   The parameter data should be structured as follows:
@@ -125,21 +178,21 @@ public class Game
     for(base in bases)
     {
       var colors = getColors(base.team);
-      contex.fillStyle=colors[1];
+      context.fillStyle=colors[1];
       for(tile in base.tiles)
       {
-        contex.fillRect(tile[0],tile[1],30,30);
+        context.fillRect(tile[0],tile[1],30,30);
       }
     }
   }
   dropCoins(){
-    socket.emit('DropCoins',true);
+    emitList.push(['dropCoins',true]);
   }
   collectCoin(coinNum){
     //coinNum is some way to reference each individual coin
-    socket.emit('CollectCoin',coinNum);
+    emitList.push(['collectCoin',coinNum]);
   }
   movePlayer(x,y){
-    socket.emit('PlayerSpeed', [x,y]);
+    emitList.push(['PlayerSpeed',[x,y]]);
   }
 }
