@@ -3,11 +3,12 @@ class Base extends GameObject
   This class is used for the 4 different bases in the map.
   ***********************************/
 {
-  constructor(tileArray){
-    this.tiles = tileArray;
+  this.tiles = [];
+  constructor(team){
+    this.team = team;
   }
-  takeDamage(dmg){
-    //TODO add serverside connection to let base take damage
+  tileTakeDamage(coords, dmg){
+    this.tiles.takeDamage(coords,dmg);
   }
   takeGold(dmg){
     //TODO add serverside connection to let base take gold
