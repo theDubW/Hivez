@@ -1,9 +1,9 @@
 var socket;
-socket = io.connect('http://10.10.149.169:1000');
+socket = io.connect('http://10.10.149.184:80');
 window.addEventListener('keydown', function changeSpeed(e){ // listens for keypresses, left, right, up, down, and e
+
 var playerXYSpeed = [0, 0];
 	if(e.keyCode == 37){ //left
-		console.log("LMAO");
 		playerXYSpeed[0]=-4;
 		playerXYSpeed[1]= 0;
 		socket.emit('PlayerSpeed',playerXYSpeed);
@@ -41,47 +41,45 @@ var canvas = document.getElementById("mess");
 var context = canvas.getContext('2d');
 
 var bart = new Image(); //This entire block is for the main character. It has the src, width, height, speed, and x and y positions
-bart.src = 'http://10.10.149.169:1000/images/Bart.gif';
+bart.src = 'http://www.stickonvinyl.co.uk/store/published/publicdata/STICKONVNEWSTICK/attachments/SC/products_pictures/Bart-Simpson-1%20FC.gif';
 bart.width = 72;
 bart.height = 184;
 var playerX = 1;
 var playerY = 1;
 
-socket.on('AllPlayers', drawAllPlayers);
-function drawAllPlayers(playerCoords){
-	for(var i = 0; i<playerCoords.length; i++){
-		for(var g = 0; g<playerCoords[i].length; g++){
-				console.log("LMAO");
-				context.drawImage(bart,playerCoords[i][g][0],playerCoords[i][g][1], 72, 184);
+var AllPlayers;
+socket.on('AllPlayers', setAllPlayers);
+function setAllPlayers(cords){
+	AllPlayers = cords;
+	console.log(AllPlayers);
+}
+function drawAllPlayers(cords){
+		console.log(cords);
+		for(var i = 0; i<cords.length; i++){
+		for(var g = 0; g<cords[i].length; g++){
+			if(cords[i][g]!=null){
+			makePlayer(cords[i][g][0], cords[i][g][0], bart.width, bart.height, bart);
+		}
 		}
 	}
 }
-var loc;
-socket.on('Code', arrayPlayerIndex);
-function arrayPlayerIndex(data){
-loc = data;
 
-}
 
-socket.on('PlayerXY', updateCords);
-function updateCords(cords){
-playerX = cords[0];
-playerY = cords[1];
-}
+
 
 var playerXSpeed = 0;
 var playerYSpeed = 0;
 
 
 var brick = new Image(); //this block is for the background, the brown bricks. Nothing special and very simple
-brick.src = 'http://10.10.149.169:1000/images/brick.png';
+brick.src = 'http://www.spriteland.com/images/sand-brick-tileset-texture.png'
 brick.width = 100;
 brick.height = 58;
 var numRows = 8;
 var numColl = 11;
 
 var wall = new Image(); //This is for the walls, and is very similar to the bricks, but they are made through the matrix down below.
-wall.src = 'http://10.10.149.169:1000/images/wall.jpg';//Every wall is a one.
+wall.src = 'http://www.yticamps.com/jhowell/Gabe%20Owings%20(Criminal%20Scum)/Sprites/handpainted_wall2.jpg';//Every wall is a one.
 wall.width = 40;
 wall.height = 80;
 var walls = [
@@ -96,7 +94,7 @@ var walls = [
 ];
 
 var gold = new Image(); // This is the block of code for the gold object. totalGold is a number refreshed every frame that checks how much gold is on the screen
-gold.src = 'http://10.10.149.169:1000/images/gold.jpg';// based on the Array "golds", which is a matrix of gold.
+gold.src = 'https://i.pinimg.com/originals/f3/2f/7a/f32f7ac408007a11a311575f94438c19.jpg';// based on the Array "golds", which is a matrix of gold.
 gold.width = 40;// "goldAmount" is the number of gold the player currently has.
 gold.height = 40;
 var totalGold = 0;
@@ -117,11 +115,12 @@ var castleHeight = 118;
 function game(){ // this is the main function which is called 30 times a second in "MessingAround.html"
 move();//Move function moves every thing in the game
 draw();//draw function draws it onto the canvas 
+playerServerKey();
 }
 function draw(){//draws everything
 drawRect(0, 0, canvas.width, canvas.height, "black");//this is the starting black background
 makeMap();//the make map function consists of all the background objects
-//context.drawImage(bart, playerX, playerY, 72, 184);// draws bart, the main character using the makePlayer function
+drawAllPlayers(AllPlayers);// draws bart, the main character using the makePlayer function
 drawRect(playerX+8, playerY-20, (goldAmount/startingGold)*60, 10, "yellow");// This is the little bar over Barts head
 }
 function move(){
@@ -149,10 +148,13 @@ function drawRect(x, y, width, height, color){ //simple function that draws you 
 context.fillStyle = color;
 context.fillRect(x,y,width,height);
 }
+function makePlayer(x, y, width, height, img){ // simple function that draws an image
+context.drawImage(img, x, y, width, height);
+}
 function drawBricks(img){ // fills the screen with bricks
 for(var i = 0; i<numColl; i++){
 	for(var g = 0; g<numRows; g++){
-		context.drawImage(img, g*img.width, i*img.height, img.width, img.height);
+		makePlayer(g*img.width, i*img.height, img.width, img.height, brick);
 	}
 }
 }
@@ -172,7 +174,7 @@ function drawWalls(img, wallArr){ // draws the walls based on the matrix
 for(var i = 0; i<wallArr.length; i++){
 	for (var g = 0; g < wallArr[i].length; g++) {
 		if(wallArr[i][g]!=0){
-		context.drawImage(img, g*img.width, i*img.height, img.width, img.height);
+		makePlayer(g*img.width, i*img.height, img.width, img.height, img);
 	}
 	}
 }
@@ -181,7 +183,7 @@ function spawnGold(img, goldArr){ // spawns gold around the map based on an arra
 for(var i = 0; i<goldArr.length; i++){
 	for(var g = 0; g<goldArr[i].length; g++){
 		if(goldArr[i][g]!=0){
-		context.drawImage(img, g*img.width, i*img.height, img.width, img.height);
+		makePlayer(g*img.width, i*img.height, img.width, img.height, img);
 		}
 	}
 }
@@ -219,7 +221,7 @@ tempAmount = totalGold;
 return tempAmount;
 }
 function makeCastle(img){ //draws the castle
-context.drawImage(img, castleX, castleY, img.width, img.height);
+	makePlayer(castleX, castleY, img.width, img.height, img);
 }
 function dropCoins(){ //triggered when you press e. Checks if you're in the area of the castle and if so grows the castle based on how many coins you have
 	if(playerX>castleX-bart.width&&playerX<castleX+castleWidth+bart.width){
