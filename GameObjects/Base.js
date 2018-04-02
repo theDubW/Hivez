@@ -1,4 +1,5 @@
-class Base extends GameObject
+const gameObject = require("./GameObject.js");
+module.exports = class Base extends GameObject
 /***********************************
   This class is used for the 4 different bases in the map.
   ***********************************/
