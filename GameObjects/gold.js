@@ -1,7 +1,8 @@
-class Gold extends GameObject
+const gameObject = require("./GameObject.js");
+module.exports = class Gold extends GameObject
 {
-  this.defImg = "./public/images/gold.jpg";
   constructor(x, y, w, h){
+    this.defImg = "./public/images/gold.jpg";
     super(x,y,defImg, w,h);
   }
 }

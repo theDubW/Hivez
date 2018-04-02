@@ -1,4 +1,4 @@
-class GameObject
+module.exports = class GameObject
 {
   constructor(x, y, img, w, h)
   {
