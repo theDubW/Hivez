@@ -1,5 +1,5 @@
 var socket;
-socket = io.connect('http://localhost:1000');
+socket = io.connect('http://10.10.149.184:80');
 window.addEventListener('keydown', function changeSpeed(e){ // listens for keypresses, left, right, up, down, and e
 
 var playerXYSpeed = [0, 0];
