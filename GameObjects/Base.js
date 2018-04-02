@@ -1,11 +1,10 @@
-const gameObject = require("./GameObject.js");
-module.exports = class Base extends GameObject
+class Base extends GameObject
 /***********************************
   This class is used for the 4 different bases in the map.
   ***********************************/
 {
+  this.tiles = [];
   constructor(team){
-    this.tiles = [];
     this.team = team;
   }
   tileTakeDamage(coords, dmg){
