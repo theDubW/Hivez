@@ -25,7 +25,12 @@ function newConnection(socket){
 	var player = new Player(socket.id, team, randX, randY, 72, 184, socket.id, null, 0);
 	allPlayers[socket.id] = player;
 	console.log(socket.id);
-	socket.on('disconnect', removePlayer);
+	socket.on('disconnect', function(){
+	console.log("Deleting Player...");
+	delete SOCKET_LIST[socket.id];
+	delete allPlayers[socket.id];
+	console.log(SOCKET_LIST[socket.id]);
+	});
 
 	socket.on('keyPress', function(data){
 	if(data.inputId == 'right'){
@@ -62,16 +67,11 @@ function newConnection(socket){
 }
 
 function removePlayer(){
-	console.log("Deleting Player...");
-	delete SOCKET_LIST[socket.id];
-	delete allPlayers[socket.id];
-	console.log(SOCKET_LIST[socket.id]+""+allPlayers[socket.id]);
+	
 }
 
 setInterval(serverLoop, UPDATE_TIME);
 function serverLoop(){
-	//for(var i in allPlayers)
-	//onsole.log(allPlayers[i].x);
 	var pack = [];
 	for(var i in allPlayers){
 		var player = allPlayers[i];
@@ -86,6 +86,7 @@ function serverLoop(){
 		var socket = SOCKET_LIST[i];
 		socket.emit('PlayerPositions', pack);
 	}
+
 }
 
 
