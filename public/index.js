@@ -4,28 +4,19 @@ window.addEventListener('keydown', function changeSpeed(e){ // listens for keypr
 
 var playerXYSpeed = [0, 0];
 	if(e.keyCode == 37){ //left
-		playerXYSpeed[0]=-4;
-		playerXYSpeed[1]= 0;
-		socket.emit('PlayerSpeed',playerXYSpeed);
+		socket.emit('keyPress', {inputId:'left'});
 	}
 	if(e.keyCode == 39){ //right
-		playerXYSpeed[0]= 4;
-		playerXYSpeed[1]= 0;
-		socket.emit('PlayerSpeed',playerXYSpeed);
+		socket.emit('keyPress', {inputId:'right'});
 	}
 	if(e.keyCode == 38){ //up
-		playerXYSpeed[0]= 0;
-		playerXYSpeed[1]= -4;
-		socket.emit('PlayerSpeed',playerXYSpeed);
+		socket.emit('keyPress', {inputId:'up'});
 	}
 	if(e.keyCode == 40){ //down
-		playerXYSpeed[0]= 0;
-		playerXYSpeed[1]= 4;
-		socket.emit('PlayerSpeed',playerXYSpeed);
+		socket.emit('keyPress', {inputId:'down'});
 	}
-		if(e.keyCode == 32){ //space stops you
-		playerYSpeed = 0;
-		playerXSpeed = 0;
+	if(e.keyCode == 32){ //space stops you
+		socket.emit('keyPress', {inputId:'stop'});
 	}
 	if(e.keyCode == 69){//when you press e you drop your coins by your base
 		dropCoins();
@@ -47,25 +38,19 @@ bart.height = 184;
 var playerX = 1;
 var playerY = 1;
 
-var AllPlayers;
-socket.on('AllPlayers', setAllPlayers);
+var AllPlayers = {};
+socket.on('PlayerPositions', setAllPlayers);
 function setAllPlayers(cords){
 	AllPlayers = cords;
-	console.log(AllPlayers);
+
 }
 function drawAllPlayers(cords){
-		console.log(cords);
-		for(var i = 0; i<cords.length; i++){
-		for(var g = 0; g<cords[i].length; g++){
-			if(cords[i][g]!=null){
-			makePlayer(cords[i][g][0], cords[i][g][0], bart.width, bart.height, bart);
-		}
-		}
+//	if(AllPlayers!=null){
+	for(var i = 0; i<cords.length; i++){
+		context.drawImage(bart, cords[i].x, cords[i].y, bart.width, bart.height);
 	}
+//}
 }
-
-
-
 
 var playerXSpeed = 0;
 var playerYSpeed = 0;
@@ -115,7 +100,6 @@ var castleHeight = 118;
 function game(){ // this is the main function which is called 30 times a second in "MessingAround.html"
 move();//Move function moves every thing in the game
 draw();//draw function draws it onto the canvas 
-playerServerKey();
 }
 function draw(){//draws everything
 drawRect(0, 0, canvas.width, canvas.height, "black");//this is the starting black background

@@ -1,50 +1,92 @@
 var express = require('express');
 var app = express();
-var server = app.listen(80);
+var server = app.listen(1000);
 app.use(express.static('public'));
 var socket = require('socket.io');
 var io = socket(server);
+const UPDATE_TIME = 1000/30;
 io.sockets.on('connection', newConnection);	
-var allPlayers = [[[]],[[]],[[]],[[]],[[]]];
-var playerCord = [1, 1];
+var allPlayers = {};
+var SOCKET_LIST = {};
+
 var XSpeed = 0;
 var YSpeed = 0;
-var numPlayers = 0;
 var playerIndex;
-console.log(allPlayers.length+" "+allPlayers[0].length);
+var Player = require('./GameObjects/Player.js');
+
+
 function newConnection(socket){
 	console.log("new connection");
-	console.log(socket.id);
+	socket.id = Math.random();
 	var randX = Math.random()*800;
 	var randY = Math.random()*600;
-	
-	socket.on('PlayerSpeed', playerSpeeds);
-	//socket.broadcast.emit('PlayerKey', numPlayers);
-	socket.on('SendPlayerKey', getPlayerIndex);
-	numPlayers++;
-	console.log(allPlayers);
-}
-function getPlayerIndex(index){
-	playerIndex = index;
-	if(playerIndex>=0){
-	movePlayer(playerIndex);
-}
-	//console.log(allPlayers);
+	var team = Math.floor(Math.random()*3);
+	SOCKET_LIST[socket.id] = socket;
+	var player = new Player(socket.id, team, randX, randY, 72, 184, socket.id, null, 0);
+	allPlayers[socket.id] = player;
+	console.log(socket.id);
+	socket.on('disconnect', removePlayer);
 
-}
-
-
-function playerSpeeds(data){
-	XSpeed = data[0];
-	YSpeed = data[1];
-//	console.log(playerCord);
-}
-function movePlayer(data){
-	if(allPlayers[0][data]!=null){
-	allPlayers[0][data][0]+=XSpeed;
-	allPlayers[0][data][1]+=YSpeed;
-	io.sockets.emit('AllPlayers', allPlayers);
+	socket.on('keyPress', function(data){
+	if(data.inputId == 'right'){
+		player.pressingUp = false;
+		player.pressingDown = false;
+		player.pressingRight = true;
+		player.pressingLeft = false;
 	}
-	console.log(allPlayers[0][data]);
+	if(data.inputId == 'left'){
+		player.pressingUp = false;
+		player.pressingDown = false;
+		player.pressingRight = false;
+		player.pressingLeft = true;
+	}
+	if(data.inputId == 'up'){
+		player.pressingUp = true;
+		player.pressingDown = false;
+		player.pressingRight = false;
+		player.pressingLeft = false;
+	}
+	if(data.inputId == 'down'){
+		player.pressingUp = false;
+		player.pressingDown = true;
+		player.pressingRight = false;
+		player.pressingLeft = false;
+	}
+	if(data.inputId == 'stop'){
+		player.pressingUp = false;
+		player.pressingDown = false;
+		player.pressingRight = false;
+		player.pressingLeft = false;
+	}	
+	});
 }
+
+function removePlayer(){
+	console.log("Deleting Player...");
+	delete SOCKET_LIST[socket.id];
+	delete allPlayers[socket.id];
+	console.log(SOCKET_LIST[socket.id]+""+allPlayers[socket.id]);
+}
+
+setInterval(serverLoop, UPDATE_TIME);
+function serverLoop(){
+	//for(var i in allPlayers)
+	//onsole.log(allPlayers[i].x);
+	var pack = [];
+	for(var i in allPlayers){
+		var player = allPlayers[i];
+		player.updatePosition();
+			pack.push({
+				x:player.x,
+				y:player.y
+			});
+	}
+
+	for(var i in SOCKET_LIST){
+		var socket = SOCKET_LIST[i];
+		socket.emit('PlayerPositions', pack);
+	}
+}
+
+
 console.log("My server is running");
