@@ -42,14 +42,12 @@ var AllPlayers = {};
 socket.on('PlayerPositions', setAllPlayers);
 function setAllPlayers(cords){
 	AllPlayers = cords;
-
 }
 function drawAllPlayers(cords){
-//	if(AllPlayers!=null){
 	for(var i = 0; i<cords.length; i++){
 		context.drawImage(bart, cords[i].x, cords[i].y, bart.width, bart.height);
 	}
-//}
+
 }
 
 var playerXSpeed = 0;
@@ -88,6 +86,12 @@ var golds = randArrofCoins();
 var startingGold = allGold(golds);
 var hasDropped = false;
 var droppable = false;
+socket.on('GoldArray', setGoldArray);
+function setGoldArray(data){
+golds = data;
+}
+
+
 
 var castle = new Image();// this is the block for the castle object
 castle.src = 'http://gallery2.jpmullan.com/d/443036-2/castle.png';//it has an x and y position, and a width and height
