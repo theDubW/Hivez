@@ -3,7 +3,7 @@ module.exports = class Player extends GameObject
 {
   constructor(playerId, team, x, y, width, height, name, img, gold)
   {
-    super(x,y,img||"./public/images/Bart.gif", width||10, height||10);
+    super(x,y,img||"./images/Bart.gif", width||10, height||10);
     this.health = 100;
     this.gold = gold || 0;
     this.pressingRight = false;

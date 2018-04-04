@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-var server = app.listen(1000);
+var server = app.listen(80);
 app.use(express.static('public'));
 var socket = require('socket.io');
 var io = socket(server);
@@ -74,14 +74,18 @@ function serverLoop(){
 		var player = allPlayers[i];
 		player.updatePosition();
 			pack.push({
-				Player: player
+				x : player.x,
+				y: player.y,
+				img : player.imgSrc,
+				width : player.width,
+				height : player.height
 			});
 	}
 
 	for(var i in SOCKET_LIST){
 		var socket = SOCKET_LIST[i];
 		socket.emit('PlayerPositions', pack);
-		//socket.emit('GoldArray', goldArr);
+		socket.emit('GoldArray', goldArr);
 	}
 
 }

@@ -1,5 +1,5 @@
 var socket;
-socket = io.connect('http://localhost:1000');
+socket = io.connect('http://192.168.1.12:80');
 window.addEventListener('keydown', function changeSpeed(e){ // listens for keypresses, left, right, up, down, and e
 
 var playerXYSpeed = [0, 0];
@@ -45,7 +45,10 @@ function setAllPlayers(cords){
 }
 function drawAllPlayers(cords){
 	for(var i = 0; i<cords.length; i++){
-		context.drawImage(bart, cords[i].x, cords[i].y, bart.width, bart.height);
+		var playerImg = new Image(cords[i].width, cords[i].height);
+		playerImg.src = cords[i].img;
+		console.log(cords[i]);
+		context.drawImage(playerImg, cords[i].x, cords[i].y, playerImg.width, playerImg.height);
 	}
 
 }
@@ -82,7 +85,7 @@ gold.width = 40;// "goldAmount" is the number of gold the player currently has.
 gold.height = 40;
 var totalGold = 0;
 var goldAmount = 0;
-var golds = randArrofCoins();
+var golds = {};
 var startingGold = allGold(golds);
 var hasDropped = false;
 var droppable = false;
