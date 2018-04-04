@@ -14,6 +14,7 @@ var YSpeed = 0;
 var playerIndex;
 var Player = require('./GameObjects/Player.js');
 
+var goldArr = makeGoldArr();
 
 function newConnection(socket){
 	console.log("new connection");
@@ -22,7 +23,7 @@ function newConnection(socket){
 	var randY = Math.random()*600;
 	var team = Math.floor(Math.random()*3);
 	SOCKET_LIST[socket.id] = socket;
-	var player = new Player(socket.id, team, randX, randY, 72, 184, socket.id, null, 0);
+	var player = new Player(socket.id, team, randX, randY, 72, 184, "Test", null, 0);
 	allPlayers[socket.id] = player;
 	console.log(socket.id);
 	socket.on('disconnect', function(){
@@ -66,10 +67,6 @@ function newConnection(socket){
 	});
 }
 
-function removePlayer(){
-	
-}
-
 setInterval(serverLoop, UPDATE_TIME);
 function serverLoop(){
 	var pack = [];
@@ -77,17 +74,31 @@ function serverLoop(){
 		var player = allPlayers[i];
 		player.updatePosition();
 			pack.push({
-				x:player.x,
-				y:player.y
+				Player: player
 			});
 	}
 
 	for(var i in SOCKET_LIST){
 		var socket = SOCKET_LIST[i];
 		socket.emit('PlayerPositions', pack);
+		//socket.emit('GoldArray', goldArr);
 	}
 
 }
-
+function makeGoldArr(){
+	var randGoldArr = [[],[],[],[],[],[],[],[],[],[],[]];
+	for(var i = 0; i<10; i++){
+		for(var g = 0; g<9; g++){
+			var randNum = Math.floor(Math.random()*10);
+			if(randNum==1){
+				randGoldArr[i][g] = 1;
+			}
+			else{
+				randGoldArr[i][g] = 0;
+			}
+		}
+	}
+	return randGoldArr;
+}
 
 console.log("My server is running");
