@@ -45,7 +45,7 @@ function setAllPlayers(cords){
 }
 function drawAllPlayers(cords){
 	for(var i = 0; i<cords.length; i++){
-		context.drawImage(cords[i].defImg, cords[i].x, cords[i].y, bart.width, bart.height);
+		context.drawImage(bart, cords[i].x, cords[i].y, bart.width, bart.height);
 	}
 
 }
