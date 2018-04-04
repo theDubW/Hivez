@@ -1,23 +1,16 @@
 public class Game
 {
-  this.emitList = {};
   /*emitList will contain every message needing to be sent to the server and will
   be sent in run() every frame. Its format is as follows:
     emitList = {['identifier',data], ['identifier',data]}
     */
   constructor(team, room, playerName){
-    this.map = getMap(player);
+    this.emitList = {};
     this.team = team;
     this.room = room;
     this.canvas = document.getElementById("mess");
     this.context=canvas.getContext('2d');
-    this.socket = io.connect('http://http://10.10.149.169:1000');
-    socket.on('GameCoords',visiblePlayer)
-    socket.on('Code',playerCode);
-    this.playerCode= playerCode;
-    this.player = new Player(x,y,playerName);
-    addEventListeners();
-    setInterval(run, 1000/30);//30 times every second run() will be called
+    this.socket = io.connect('http://localhost:1000');
   }
   addEventListeners(){
     window.addEventListener('keydown', function(e){
@@ -26,19 +19,19 @@ public class Game
       switch(keyCode)
       {
         case 37: //left
-          movePlayer(-4,0);
+          emitList.push(['keypress',{inputId:'left'}]);
           break;
         case 39: //right
-          movePlayer(4,0);
+		      emitList.push(['keyPress', {inputId:'right'}]);
           break;
         case 38: //up
-          movePlayer(0,-4);
+		      emitList.push(['keyPress', {inputId:'up'}]);
           break;
         case 40: //down
-          movePlayer(0,4);
+		      emitList.push(['keyPress', {inputId:'down'}]);
           break;
         case 69: //e
-          dropCoins();
+          emitList.push(['dropCoins','true']);
           break;
     }
     canvas.onmousemove = function(e){
@@ -116,13 +109,17 @@ public class Game
         squares:[[50,40],[30,12],[55,34]]
       }
     ]
-  ]
   }
   *************************************************************/
   draw(data){
+    drawRect(0,0,canvas.width,canvas.height, "green");//Background grass
     drawCoins(data.coins);
     drawPlayers(data.players);
     drawBases(data.bases);
+  }
+  function drawRect(x, y, width, height, color){ //simple function that draws you a rectangle
+    context.fillStyle = color;
+    context.fillRect(x,y,width,height);
   }
   drawCoins(coins){
     for(var coin in coins)
@@ -131,6 +128,11 @@ public class Game
       gold.src = './public/images/gold.jpg';
       context.drawImage(gold, coin[0], coin[1]);
     }
+  }
+  start()
+  {
+    addEventListeners();
+    setInterval(run, 1000/30);//30 times every second run() will be called
   }
   getColors(team)
   {
