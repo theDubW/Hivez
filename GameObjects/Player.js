@@ -3,10 +3,7 @@ module.exports = class Player extends GameObject
 {
   constructor(playerId, team, x, y, width, height, name, img, gold)
   {
-    super(x,y,img, width, height);
-    this.defW = 10;
-    this.defH = 10;
-    this.defImg = "./public/images/Bart.gif";
+    super(x,y,img||"./public/images/Bart.gif", width||10, height||10);
     this.health = 100;
     this.gold = 0;
     this.pressingRight = false;
@@ -51,7 +48,7 @@ module.exports = class Player extends GameObject
     //  this.playerYSpeed = 4;
     //  this.playerXSpeed = 0;
       this.y += this.playerYSpeed;
-      
+
     }
   }
   incGold(g)
