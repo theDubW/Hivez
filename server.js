@@ -73,7 +73,6 @@ function serverLoop(){
 	for(var i in allPlayers){
 		var player = allPlayers[i];
 		player.updatePosition();
-		//checkForGold();
 			pack.push({
 				x : player.x,
 				y: player.y,
@@ -87,14 +86,13 @@ function serverLoop(){
 		var socket = SOCKET_LIST[i];
 		socket.emit('PlayerPositions', pack);
 		socket.emit('GoldArray', goldArr);
-		console.log(goldArr);
 	}
 
 }
 function makeGoldArr(){
 	var randGoldArr = [[],[],[],[],[],[],[],[],[],[],[]];
-	for(var i = 0; i<11; i++){
-		for(var g = 0; g<11; g++){
+	for(var i = 0; i<10; i++){
+		for(var g = 0; g<9; g++){
 			var randNum = Math.floor(Math.random()*10);
 			if(randNum==1){
 				randGoldArr[i][g] = 1;
@@ -105,24 +103,6 @@ function makeGoldArr(){
 		}
 	}
 	return randGoldArr;
-}
-function checkForGold(){
-	for(var i in allPlayers){
-		for(var g = 0; g<goldArr.length; g++){
-			for(var h = 0; h<goldArr[g].length; h++){
-				console.log(goldArr[g][h]);
-				if(g == 1){
-					if(allPlayers[i].x<g[g][h]*40+60&&allPlayers[i].x>g[g][h]*40-60){
-						if(allPlayers[i].y>g[g][h]*40-20&&allPlayers[i].y<g[g][h]*40+40){
-							allPlayers[i].incGold(5);
-							goldArr[g][h] = 0;
-						}
-
-					}
-				}
-			}
-		}
-	}
 }
 
 console.log("My server is running");

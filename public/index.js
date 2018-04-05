@@ -47,6 +47,7 @@ function drawAllPlayers(cords){
 	for(var i = 0; i<cords.length; i++){
 		var playerImg = new Image(cords[i].width, cords[i].height);
 		playerImg.src = cords[i].img;
+		console.log(cords[i]);
 		context.drawImage(playerImg, cords[i].x, cords[i].y, playerImg.width, playerImg.height);
 	}
 
@@ -173,7 +174,7 @@ function spawnGold(img, goldArr){ // spawns gold around the map based on an arra
 for(var i = 0; i<goldArr.length; i++){
 	for(var g = 0; g<goldArr[i].length; g++){
 		if(goldArr[i][g]!=0){
-		context.drawImage(img, g*img.width, i*img.height, img.width, img.height);
+		makePlayer(g*img.width, i*img.height, img.width, img.height, img);
 		}
 	}
 }
@@ -211,7 +212,7 @@ tempAmount = totalGold;
 return tempAmount;
 }
 function makeCastle(img){ //draws the castle
-	context.drawImage(img, castleX, castleY, img.width, img.height);
+	makePlayer(castleX, castleY, img.width, img.height, img);
 }
 function dropCoins(){ //triggered when you press e. Checks if you're in the area of the castle and if so grows the castle based on how many coins you have
 	if(playerX>castleX-bart.width&&playerX<castleX+castleWidth+bart.width){
@@ -233,7 +234,7 @@ function dropCoins(){ //triggered when you press e. Checks if you're in the area
 function randArrofCoins(){ // makes a random array of arrays and fills it with places with coins
 	var coinMatrix = [[],[],[],[],[],[],[],[],[],[],[],[]];
 	for(var i = 0; i<coinMatrix.length; i++){
-		for (var g = 0; g < coinMatrix[i].length; g++) {
+		for (var g = 0; g < coinMatrix.length; g++) {
 			var randNum = Math.floor(Math.random()*11);
 
 			if(randNum == 1){
