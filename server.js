@@ -15,7 +15,9 @@ var YSpeed = 0;
 var playerIndex;
 var Player = require('./GameObjects/Player.js');
 
+
 var numOfConnections = 0;
+var Gold = require('./GameObjects/gold.js');
 var goldArr = makeGoldArr();
 
 function newConnection(socket){
@@ -92,15 +94,15 @@ function serverLoop(){
 
 }
 function makeGoldArr(){
-	var randGoldArr = [[],[],[],[],[],[],[],[],[],[],[]];
+	var randGoldArr = {};
 	for(var i = 0; i<10; i++){
 		for(var g = 0; g<9; g++){
-			var randNum = Math.floor(Math.random()*10);
-			if(randNum==1){
-				randGoldArr[i][g] = 1;
-			}
-			else{
-				randGoldArr[i][g] = 0;
+			var randNum = Math.floor(Math.random()*11);
+			if(randNum == 1){
+			var randomX = Math.random()*800;
+			var randomY = Math.random()*600;
+			var tempGold = new Gold();
+			randGoldArr.push()
 			}
 		}
 	}
