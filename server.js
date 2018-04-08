@@ -14,6 +14,7 @@ var YSpeed = 0;
 var playerIndex;
 var Player = require('./GameObjects/Player.js');
 
+var numOfConnections = 0;
 var goldArr = makeGoldArr();
 
 function newConnection(socket){
@@ -31,6 +32,8 @@ function newConnection(socket){
 	delete SOCKET_LIST[socket.id];
 	delete allPlayers[socket.id];
 	console.log(SOCKET_LIST[socket.id]);
+	numOfConnections++;
+	console.log(numOfConnections);
 	});
 
 	socket.on('keyPress', function(data){

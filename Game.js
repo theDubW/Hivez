@@ -12,6 +12,7 @@ public class Game
     this.context=canvas.getContext('2d');
     this.socket = io.connect('http://localhost:1000');
   }
+
   addEventListeners(){
     window.addEventListener('keydown', function(e){
        // listens for keypresses, left, right, up, down, and e
@@ -80,7 +81,7 @@ public class Game
     }
   }
   run(){//Called every frame, gets visual data from server
-    socket.on('GameCoords',draw);
+    socket.on('PlayerPositions',draw);
     socket.emit("UserData",emitList);//Sends all of the data
   }
   /****************************************************8
