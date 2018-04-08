@@ -202,5 +202,5 @@ const Game = class Game
   }
 }
 
-var gameObject = new Game();
+var gameObject = new Game(4, 53, "jack Wier");
 gameObject.start();
