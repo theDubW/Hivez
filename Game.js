@@ -87,12 +87,12 @@ public class Game
   /****************************************************8
   The parameter data should be structured as follows:
   data = {
-    coins:
+    GoldArray:
     [
       [x,y],
       [x,y], etc...
     ]
-    players:
+    AllPlayers:
     {
         {
           name:"Jack Wier",
@@ -114,8 +114,8 @@ public class Game
   *************************************************************/
   draw(data){
     drawRect(0,0,canvas.width,canvas.height, "green");//Background grass
-    drawCoins(data.coins);
-    drawPlayers(data.players);
+    drawCoins(data.GoldArr);
+    drawPlayers(data.AllPlayers);
     //drawBases(data.bases);
   }
   drawRect(x, y, width, height, color){ //simple function that draws you a rectangle
