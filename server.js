@@ -8,6 +8,7 @@ const UPDATE_TIME = 1000/30;
 io.sockets.on('connection', newConnection);	
 var allPlayers = {};
 var SOCKET_LIST = {};
+var BASE_ARRAY = {};
 
 var XSpeed = 0;
 var YSpeed = 0;
@@ -77,17 +78,15 @@ function serverLoop(){
 		var player = allPlayers[i];
 		player.updatePosition();
 			pack.push({
-				x : player.x,
-				y: player.y,
-				img : player.imgSrc,
-				width : player.width,
-				height : player.height
-			});
+				AllPlayers : allPlayers,
+				GoldArr : goldArr
+				//TO DO: PUSH BASE ARR
+		});
 	}
 
 	for(var i in SOCKET_LIST){
 		var socket = SOCKET_LIST[i];
-		socket.emit('PlayerPositions', pack);
+		socket.emit('data', pack);
 		socket.emit('GoldArray', goldArr);
 	}
 
