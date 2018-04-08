@@ -1,4 +1,4 @@
-public class Game
+class Game
 {
   /*emitList will contain every message needing to be sent to the server and will
   be sent in run() every frame. Its format is as follows:
@@ -10,7 +10,7 @@ public class Game
     this.room = room;
     this.canvas = document.getElementById("mess");
     this.context=canvas.getContext('2d');
-    this.socket = io.connect('http://localhost:1000');
+    this.socket = io.connect('http://localhost:80');
   }
 
   addEventListeners(){
@@ -200,3 +200,6 @@ public class Game
     emitList.push(['PlayerSpeed',[x,y]]);
   }
 }
+
+var gameObject = new Game();
+gameObject.start();
