@@ -1,4 +1,4 @@
-class Game
+const Game = class Game
 {
   /*emitList will contain every message needing to be sent to the server and will
   be sent in run() every frame. Its format is as follows:
@@ -34,47 +34,47 @@ class Game
         case 69: //e
           emitList.push(['dropCoins','true']);
           break;
-    }
-    canvas.onmousemove = function(e){
-      const DEGRAD = 57.2974694;//The number of degrees per radian
-      var playerX = canvas.width/2;
-      var playerY = canvas.height/2;
-      var mouseX = e.clientX;
-      var mouseY = e.clientY;
-      var orientation = 0;
-      if(mouseX==playerX && mouseY>playerY);
-      {
-        orientation = 180;
       }
-      else if(mouseX==playerX){}//This would set orientation to 0, but it already is
-      else if(mouseY==playerY && mouseX>playerX)
-      {
-        orientation = 90;
-      }
-      else if(mouseY==playerY)
-      {
-        orientation = 270;
-      }
-      else
-      {
-        if(mouseX>playerX && mouseY < playerY)//If its in the top right quadrant
+      canvas.onmousemove = function(e){
+        const DEGRAD = 57.2974694;//The number of degrees per radian
+        var playerX = canvas.width/2;
+        var playerY = canvas.height/2;
+        var mouseX = e.clientX;
+        var mouseY = e.clientY;
+        var orientation = 0;
+        if(mouseX==playerX && mouseY>playerY);
         {
-            orientation = Math.atan((mouseX-playerX)/(playerY-mouseY))*DEGRAD;
+          orientation = 180;
         }
-        else if(mouseX>playerX)//If its in the bottom left quadrant
+        else if(mouseX==playerX){}//This would set orientation to 0, but it already is
+        else if(mouseY==playerY && mouseX>playerX)
         {
-          orientation = Math.atan((mouseY-playerY)/(mouseX-playerX))*DEGRAD + 90;
+          orientation = 90;
         }
-        else if(mouseY>playerY)//If its in the bottom right quadrant
+        else if(mouseY==playerY)
         {
-          orientation = Math.atan((playerX-mouseX)/(mouseY-playerY))*DEGRAD + 180;
+          orientation = 270;
         }
-        else //If its in the top left quardant
+        else
         {
-          orientation = Math.atan((playerY-mouseY)/(playerX-mouseX))*DEGRAD + 270;
+          if(mouseX>playerX && mouseY < playerY)//If its in the top right quadrant
+          {
+              orientation = Math.atan((mouseX-playerX)/(playerY-mouseY))*DEGRAD;
+          }
+          else if(mouseX>playerX)//If its in the bottom left quadrant
+          {
+            orientation = Math.atan((mouseY-playerY)/(mouseX-playerX))*DEGRAD + 90;
+          }
+          else if(mouseY>playerY)//If its in the bottom right quadrant
+          {
+            orientation = Math.atan((playerX-mouseX)/(mouseY-playerY))*DEGRAD + 180;
+          }
+          else //If its in the top left quardant
+          {
+            orientation = Math.atan((playerY-mouseY)/(playerX-mouseX))*DEGRAD + 270;
+          }
         }
-      }
-      emitList.push(["orientation",orientation]);//Adds it to the emitList
+        emitList.push(["orientation",orientation]);//Adds it to the emitList
     }
     canvas.onclick = function(e){
       emitList.push(['playerClick',true]);
