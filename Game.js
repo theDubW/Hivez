@@ -203,4 +203,4 @@ class Game
 }
 
 var gameObject = new Game();
-gameObject.start();
+  gameObject.start();
