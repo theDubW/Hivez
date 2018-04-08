@@ -82,7 +82,7 @@ public class Game
   }
   run(){//Called every frame, gets visual data from server
     socket.on('PlayerPositions',draw);
-    socket.emit("UserData",emitList);//Sends all of the data
+    emitList.length==0 || socket.emit("UserData",emitList);//Sends all of the data
   }
   /****************************************************8
   The parameter data should be structured as follows:
@@ -116,9 +116,9 @@ public class Game
     drawRect(0,0,canvas.width,canvas.height, "green");//Background grass
     drawCoins(data.coins);
     drawPlayers(data.players);
-    drawBases(data.bases);
+    //drawBases(data.bases);
   }
-  function drawRect(x, y, width, height, color){ //simple function that draws you a rectangle
+  drawRect(x, y, width, height, color){ //simple function that draws you a rectangle
     context.fillStyle = color;
     context.fillRect(x,y,width,height);
   }
