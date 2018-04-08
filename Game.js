@@ -79,6 +79,7 @@ class Game
     canvas.onclick = function(e){
       emitList.push(['playerClick',true]);
     }
+    }
   }
   run(){//Called every frame, gets visual data from server
     socket.on('PlayerPositions',draw);
