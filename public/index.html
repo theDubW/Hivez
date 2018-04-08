@@ -14,7 +14,7 @@ const Game = class Game
 	constructor(){
 		this.emitList = {};
 		this.canvas = document.getElementById("mess");
-		this.context=canvas.getContext('2d');
+		this.context= this.canvas.getContext('2d');
 		this.socket = io.connect('http://localhost:80');
 	}
 
@@ -47,7 +47,7 @@ const Game = class Game
 				var mouseX = e.clientX;
 				var mouseY = e.clientY;
 				var orientation = 0;
-				if(mouseX==playerX && mouseY>playerY);
+				if(mouseX==playerX && mouseY>playerY)
 				{
 					orientation = 180;
 				}
@@ -84,7 +84,7 @@ const Game = class Game
 		canvas.onclick = function(e){
 			emitList.push(['playerClick',true]);
 		}
-		}
+	});
 	}
 	run(){//Called every frame, gets visual data from server
 		socket.on('PlayerPositions',draw);
