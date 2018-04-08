@@ -1,8 +1,6 @@
 var socket;
 socket = io.connect('http://10.10.149.144:80');
 window.addEventListener('keydown', function changeSpeed(e){ // listens for keypresses, left, right, up, down, and e
-
-var playerXYSpeed = [0, 0];
 	if(e.keyCode == 37){ //left
 		socket.emit('keyPress', {inputId:'left'});
 	}
@@ -22,7 +20,7 @@ var playerXYSpeed = [0, 0];
 		dropCoins();
 		goldAmount=0;
 	}
-	
+
 });
 
 
@@ -32,11 +30,9 @@ var canvas = document.getElementById("mess");
 var context = canvas.getContext('2d');
 
 var bart = new Image(); //This entire block is for the main character. It has the src, width, height, speed, and x and y positions
-bart.src = 'http://www.stickonvinyl.co.uk/store/published/publicdata/STICKONVNEWSTICK/attachments/SC/products_pictures/Bart-Simpson-1%20FC.gif';
+bart.src = './images/Bart.gif';
 bart.width = 72;
 bart.height = 184;
-var playerX = 1;
-var playerY = 1;
 
 var AllPlayers = {};
 socket.on('PlayerPositions', setAllPlayers);
@@ -106,7 +102,7 @@ var castleWidth = 100;
 var castleHeight = 118;
 function game(){ // this is the main function which is called 30 times a second in "MessingAround.html"
 move();//Move function moves every thing in the game
-draw();//draw function draws it onto the canvas 
+draw();//draw function draws it onto the canvas
 }
 function draw(){//draws everything
 drawRect(0, 0, canvas.width, canvas.height, "black");//this is the starting black background
@@ -191,8 +187,8 @@ function collectGold(img, goldArrs){ // checks if you're collecting gold
 					if(goldAmount>0){
 						droppable = true;
 					}
-			
-				}  
+
+				}
 			}
 		}
 	}
