@@ -4,10 +4,8 @@ const Game = class Game
   be sent in run() every frame. Its format is as follows:
     emitList = {['identifier',data], ['identifier',data]}
     */
-  constructor(team, room, playerName){
+  constructor(){
     this.emitList = {};
-    this.team = team;
-    this.room = room;
     this.canvas = document.getElementById("mess");
     this.context=canvas.getContext('2d');
     this.socket = io.connect('http://localhost:80');
@@ -202,5 +200,5 @@ const Game = class Game
   }
 }
 
-var gameObject = new Game(4, 53, "jack Wier");
+var gameObject = new Game();
 gameObject.start();
