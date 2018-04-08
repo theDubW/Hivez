@@ -5,7 +5,7 @@ app.use(express.static('public'));
 var socket = require('socket.io');
 var io = socket(server);
 const UPDATE_TIME = 1000/30;
-io.sockets.on('connection', newConnection);	
+io.sockets.on('connection', newConnection);
 var allPlayers = {};
 var SOCKET_LIST = {};
 var BASE_ARRAY = {};
@@ -70,7 +70,7 @@ function newConnection(socket){
 		player.pressingDown = false;
 		player.pressingRight = false;
 		player.pressingLeft = false;
-	}	
+	}
 	});
 }
 
@@ -86,7 +86,11 @@ function serverLoop(){
 		});
 	}
 	for(var g in goldArr){
+<<<<<<< HEAD
 		pack.push([g.x, g.y]);
+=======
+		pack.push([g.x,g.y]);
+>>>>>>> c18ac81c02ee84e6396b4da2e0567d7ff6fbff44
 	}
 
 	for(var i in SOCKET_LIST){
