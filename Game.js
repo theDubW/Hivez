@@ -174,6 +174,7 @@ public class Game
       context.fill();
       context.font = "30px Arial";
       context.fillText(player.name, player.position[0]-35, player.position[1]+40);
+      drawRect(player.position[0],player.position[1],player.health,20);
     }
   }
   drawBases(bases)
