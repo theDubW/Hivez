@@ -81,8 +81,13 @@ function serverLoop(){
 		player.updatePosition();
 			pack.push({
 				AllPlayers : allPlayers,
-				GoldArr : goldArr
 				//TO DO: PUSH BASE ARR
+		});
+	}
+	for(var g in goldArr){
+		pack.push({
+			x: g.x,
+			y: g.y
 		});
 	}
 
@@ -101,8 +106,8 @@ function makeGoldArr(){
 			if(randNum == 1){
 			var randomX = Math.random()*800;
 			var randomY = Math.random()*600;
-			var tempGold = new Gold();
-			randGoldArr.push()
+			var tempGold = new Gold(randomX, randomY);
+			randGoldArr.push(tempGold)
 			}
 		}
 	}
